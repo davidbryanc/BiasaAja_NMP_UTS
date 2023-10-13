@@ -7,6 +7,10 @@ android {
     namespace = "com.biasaaja.nmp_uts"
     compileSdk = 33
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.biasaaja.nmp_uts"
         minSdk = 24
@@ -33,10 +37,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+
+
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
