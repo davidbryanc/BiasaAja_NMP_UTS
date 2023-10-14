@@ -2,6 +2,8 @@ package com.biasaaja.nmp_uts
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.biasaaja.nmp_uts.databinding.ActivityCreate3Binding
 
@@ -36,6 +38,18 @@ class Create3Activity : AppCompatActivity() {
             intent2.putExtra(KEY_PAR, intent.getStringExtra(Create2Activity.KEY_PAR))
 
             startActivity(intent2)
+        }
+
+        binding.btnPublish.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            builder.setMessage("Are you sure about publishing this story?")
+            builder.setNegativeButton("CANCEL", null)
+            builder.setPositiveButton("PUBLISH") { dialogInterface, i ->
+                Toast.makeText(it.context, "Story have been published", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            builder.create().show()
         }
     }
 }
