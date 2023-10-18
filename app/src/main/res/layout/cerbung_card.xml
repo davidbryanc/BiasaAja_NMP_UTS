@@ -53,8 +53,8 @@
                 android:layout_width="275dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="by: [author]"
+                android:layout_marginTop="8dp"
+                android:text="by [author]"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
@@ -81,6 +81,48 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+            <ImageView
+                android:id="@+id/imgSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtAuthor"
+                app:srcCompat="@drawable/baseline_format_list_numbered_24" />
+
+            <TextView
+                android:id="@+id/txtSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:text="[size]"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imgSize"
+                app:layout_constraintTop_toTopOf="@+id/imgSize" />
+
+            <TextView
+                android:id="@+id/txtLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:text="[like]"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imgLike"
+                app:layout_constraintTop_toTopOf="@+id/imgLike" />
+
+            <ImageView
+                android:id="@+id/imgLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="-2dp"
+                app:layout_constraintStart_toEndOf="@+id/txtSize"
+                app:layout_constraintTop_toTopOf="@+id/txtSize"
+                app:srcCompat="@drawable/baseline_thumb_up_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

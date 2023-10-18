@@ -23,6 +23,7 @@ class ReadActivity : AppCompatActivity() {
 
         val cerbung= Cerbung(0,"","",0, "", "", 0, false).findCerbungById(cerbungId)
         val author = User(0, "").findUserById(cerbung!!.author)
+        val genre = Genre(0, "").findGenreById(cerbung!!.genre)
 
         val lm: LinearLayoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = lm
@@ -35,6 +36,22 @@ class ReadActivity : AppCompatActivity() {
 
 //        binding.txtTitle.text = cerbungId.toString()
         binding.txtTitle.setText(cerbung.title)
+
+        var size = 0
+        for (paragraph in Global.paragraphes)
+        {
+            if(paragraph.cerbungId == cerbungId) size++
+        }
+        binding.txtSize.text = size.toString()
+
+        var like = 0 //Nanti akan diganti dengan jumlah like-nya yang sebenarnya
+        binding.txtLike.text = like.toString()
+        binding.txtGenre.text = genre!!.name
+
+        var access = ""
+        if (cerbung.access) access = "Public" else access = "Restricted"
+        binding.txtAccess.text = access
+
         binding.txtAuthor.setText(author.toString())
 //        binding.txtAuthor.text  = cerbung.id.toString()
         binding.txtDate.setText(cerbung.date)
