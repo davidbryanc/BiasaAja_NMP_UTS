@@ -20,7 +20,7 @@ class Create1Activity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Set Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, Global.genre)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, Global.genres)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinGenre.adapter = adapter
 
