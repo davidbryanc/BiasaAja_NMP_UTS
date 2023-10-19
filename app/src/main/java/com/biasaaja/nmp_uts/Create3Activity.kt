@@ -46,7 +46,7 @@ class Create3Activity : AppCompatActivity() {
             builder.setNegativeButton("CANCEL", null)
             builder.setPositiveButton("PUBLISH") { dialogInterface, i ->
                 Toast.makeText(it.context, "Story have been published", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             }
             builder.create().show()

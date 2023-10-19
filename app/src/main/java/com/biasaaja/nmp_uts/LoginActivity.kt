@@ -17,8 +17,9 @@ class LoginActivity : AppCompatActivity() {
             if(binding.txtUsername.text.toString().equals("12345")
                 && binding.txtPassword.text.toString().equals("12345")){
                 Toast.makeText(it.context, "Sign in successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
+                this.finish()
             }else{
                 Toast.makeText(it.context, "Wrong username or password", Toast.LENGTH_SHORT).show()
             }
