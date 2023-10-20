@@ -24,7 +24,7 @@ class ReadActivity : AppCompatActivity() {
 
         val cerbung= Cerbung(0,"","","", "", "", 0, false).findCerbungById(cerbungId)
         val author = User("", "", "").findUserById(cerbung!!.author)
-        val genre = Genre(0, "").findGenreById(cerbung!!.genre)
+        val genre = Genre(0, "").findGenreById(cerbung.genre)
 
         val lm: LinearLayoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = lm

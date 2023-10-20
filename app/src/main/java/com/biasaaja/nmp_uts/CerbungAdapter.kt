@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 
 class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
 
-    companion object{
+    companion object {
         val ID_CERBUNG = "ID_CERBUNG"
     }
 
@@ -30,22 +30,20 @@ class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>(
             Picasso.get().load(url).into(imgPoster)
             txtTitle.text = Global.cerbungs[position].title
 
-            txtAuthor.text = "by " + User("", "","").findUserById(Global.cerbungs[position].author).toString()
-            //kendala: Constructor berparameter
+            txtAuthor.text = "by " + Global.cerbungs[position].author.toString()
 
             txtDescription.text = Global.cerbungs[position].description
 
             var size = 0
-            for (paragraph in Global.paragraphes)
-            {
-                if(paragraph.cerbung == Global.cerbungs[position].id) size++
+            for (paragraph in Global.paragraphes) {
+                if (paragraph.cerbung == Global.cerbungs[position].id) size++
             }
             txtSize.text = size.toString()
 
             var like = 0 //Nanti akan diganti dengan jumlah like-nya yang sebenarnya
             txtLike.text = like.toString()
 
-            btnRead.setOnClickListener{
+            btnRead.setOnClickListener {
                 val intent = Intent(it.context, ReadActivity::class.java)
                 intent.putExtra(ID_CERBUNG, Global.cerbungs[position].id)
                 it.context.startActivity(intent)
