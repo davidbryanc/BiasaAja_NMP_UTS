@@ -17,7 +17,7 @@ class ParagraphAdapter(val cerbungId: Int) : RecyclerView.Adapter<ParagraphAdapt
     override fun onBindViewHolder(holder: ParagraphViewHolder, position: Int) {
         val relatedParagraphes = arrayListOf<Paragraph>()
         for (paragraph in Global.paragraphes) {
-            if (paragraph.cerbungId == cerbungId)
+            if (paragraph.cerbung == cerbungId)
             {
                 relatedParagraphes.add(paragraph)
             }
@@ -25,7 +25,7 @@ class ParagraphAdapter(val cerbungId: Int) : RecyclerView.Adapter<ParagraphAdapt
         with(holder.binding) {
             txtParagraph.text = relatedParagraphes[position].paragraph
 
-            txtAuthor.text = User(0, "").findUserById(relatedParagraphes[position].authorId).toString()
+            txtAuthor.text = User("","", "").findUserById(relatedParagraphes[position].author).toString()
             //kendala: Constructor berparameter
 
         }
@@ -35,7 +35,7 @@ class ParagraphAdapter(val cerbungId: Int) : RecyclerView.Adapter<ParagraphAdapt
     override fun getItemCount(): Int {
         var i = 0
         for (paragraph in Global.paragraphes) {
-            if (paragraph.cerbungId == cerbungId)
+            if (paragraph.cerbung == cerbungId)
             {
                 i++
             }

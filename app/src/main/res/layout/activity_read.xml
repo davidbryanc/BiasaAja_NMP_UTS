@@ -65,7 +65,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,19 @@
             android:text="Follow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtNewParagraph" />
+            app:layout_constraintTop_toBottomOf="@+id/txtCharCount" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnFollow"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imgSize"
@@ -126,31 +138,6 @@
             app:layout_constraintTop_toTopOf="@+id/txtSize"
             app:srcCompat="@drawable/baseline_thumb_up_24" />
 
-        <TextView
-            android:id="@+id/txtGenre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/purple_200"
-            android:text="[genre]"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgSize" />
-
-        <TextView
-            android:id="@+id/txtAccess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@color/purple_200"
-            android:text="[access]"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/txtGenre"
-            app:layout_constraintTop_toTopOf="@+id/txtGenre" />
-
         <EditText
             android:id="@+id/txtNewParagraph"
             android:layout_width="300dp"
@@ -168,6 +155,39 @@
             android:textColorHint="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <Button
+            android:id="@+id/txtGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="[Genre]"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgSize" />
+
+        <Button
+            android:id="@+id/txtAccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="[Access]"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/txtGenre"
+            app:layout_constraintTop_toTopOf="@+id/txtGenre" />
+
+        <TextView
+            android:id="@+id/txtCharCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="32dp"
+            android:text="([count] of 70 characters)"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtNewParagraph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

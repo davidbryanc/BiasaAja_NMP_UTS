@@ -30,7 +30,7 @@ class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>(
             Picasso.get().load(url).into(imgPoster)
             txtTitle.text = Global.cerbungs[position].title
 
-            txtAuthor.text = "by " + User(0, "").findUserById(Global.cerbungs[position].author).toString()
+            txtAuthor.text = "by " + User("", "","").findUserById(Global.cerbungs[position].author).toString()
             //kendala: Constructor berparameter
 
             txtDescription.text = Global.cerbungs[position].description
@@ -38,7 +38,7 @@ class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>(
             var size = 0
             for (paragraph in Global.paragraphes)
             {
-                if(paragraph.cerbungId == Global.cerbungs[position].id) size++
+                if(paragraph.cerbung == Global.cerbungs[position].id) size++
             }
             txtSize.text = size.toString()
 

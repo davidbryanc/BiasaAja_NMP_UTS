@@ -3,6 +3,7 @@ package com.biasaaja.nmp_uts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biasaaja.nmp_uts.databinding.ActivityHomeBinding
 import com.biasaaja.nmp_uts.databinding.ActivityReadBinding
@@ -21,8 +22,8 @@ class ReadActivity : AppCompatActivity() {
 
         val cerbungId = intent.getIntExtra(ID_CERBUNG, 0)
 
-        val cerbung= Cerbung(0,"","",0, "", "", 0, false).findCerbungById(cerbungId)
-        val author = User(0, "").findUserById(cerbung!!.author)
+        val cerbung= Cerbung(0,"","","", "", "", 0, false).findCerbungById(cerbungId)
+        val author = User("", "", "").findUserById(cerbung!!.author)
         val genre = Genre(0, "").findGenreById(cerbung!!.genre)
 
         val lm: LinearLayoutManager = LinearLayoutManager(this)
@@ -40,7 +41,7 @@ class ReadActivity : AppCompatActivity() {
         var size = 0
         for (paragraph in Global.paragraphes)
         {
-            if(paragraph.cerbungId == cerbungId) size++
+            if(paragraph.cerbung == cerbungId) size++
         }
         binding.txtSize.text = size.toString()
 
@@ -53,10 +54,16 @@ class ReadActivity : AppCompatActivity() {
         binding.txtAccess.text = access
 
         binding.txtAuthor.setText(author.toString())
-//        binding.txtAuthor.text  = cerbung.id.toString()
         binding.txtDate.setText(cerbung.date)
-        Log.d("txtTitle", cerbung.title)
-        Log.d("txtAuthor", author.toString())
-        Log.d("txtDate", cerbung.date)
+        binding.txtCharCount.text = "(0 of 70 characters)"
+
+        binding.txtNewParagraph.doOnTextChanged { text, start, before, count ->
+            var charCount = binding.txtNewParagraph.length()
+            binding.txtCharCount.text = "(" + charCount + " of 70 characters)"
+        }
+
+//        Log.d("txtTitle", cerbung.title)
+//        Log.d("txtAuthor", author.toString())
+//        Log.d("txtDate", cerbung.date)
     }
 }

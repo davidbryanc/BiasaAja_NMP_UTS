@@ -2,12 +2,12 @@ package com.biasaaja.nmp_uts
 
 import java.util.Date
 
-class User (val id:Int, val name:String){
+class User (val username:String, val profilePictureURL: String, val password:String){
     override fun toString(): String {
-        return name
+        return username
     }
 
-    fun findUserById(findId: Int): User? {
-        return Global.users.find { it.id == findId }
+    fun findUserById(findUser: String): User? {
+        return Global.users.find { it.username == findUser }
     }
 }
