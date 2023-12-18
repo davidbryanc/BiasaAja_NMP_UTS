@@ -1,5 +1,6 @@
 package com.biasaaja.nmp_uts
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -41,6 +42,16 @@ class LoginActivity : AppCompatActivity() {
                             ,obj.getJSONObject("data").getString("password")
                             ,obj.getJSONObject("data").getString("profile_url"))
                         Toast.makeText(applicationContext, message ,Toast.LENGTH_SHORT).show()
+
+                        val sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+
+                        editor.putInt("user_id", user.id)
+                        editor.putString("username", user.username)
+                        editor.putString("profile_url", user.profile_url)
+
+                        editor.apply()
+
                         val intent = Intent(this, HomeActivity::class.java)
                         intent.putExtra(KEY_USERNAME, user.username)
                         startActivity(intent)

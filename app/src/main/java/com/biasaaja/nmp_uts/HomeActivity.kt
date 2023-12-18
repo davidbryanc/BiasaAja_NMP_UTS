@@ -1,5 +1,6 @@
 package com.biasaaja.nmp_uts
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,14 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        val sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE)
+
+//        val userId = sharedPreferences.getInt("user_id", 0)
+        val username = sharedPreferences.getString("username", "")
+//        val profile_url = sharedPreferences.getString("profile_url", "")
+
+
         val lm: LinearLayoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = lm
         binding.recyclerView.setHasFixedSize(true)
@@ -23,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.btnCreate.setOnClickListener(){
             val intent = Intent(this, Create1Activity::class.java)
-            intent.putExtra(KEY_USERNAME, LoginActivity.KEY_USERNAME)
+            intent.putExtra(KEY_USERNAME, username)
             startActivity(intent)
         }
     }
