@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            var login = false
+//            var login = false
             var username = binding.txtUsername.text.toString()
             var password = binding.txtPassword.text.toString()
 
@@ -67,14 +67,14 @@ class LoginActivity : AppCompatActivity() {
 ////                    username = user.username
 ////                }
 ////            }
-            if(!login) Toast.makeText(it.context, "Wrong username or password", Toast.LENGTH_SHORT).show()
-            else {
-                Toast.makeText(it.context, "Sign in successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra(KEY_USERNAME, username)
-                startActivity(intent)
-                this.finish()
-            }
+//            if(!login) Toast.makeText(it.context, "Wrong username or password", Toast.LENGTH_SHORT).show()
+//            else {
+//                Toast.makeText(it.context, "Sign in successful", Toast.LENGTH_SHORT).show()
+//                val intent = Intent(this, HomeActivity::class.java)
+//                intent.putExtra(KEY_USERNAME, username)
+//                startActivity(intent)
+//                this.finish()
+//            }
         }
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
