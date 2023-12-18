@@ -15,12 +15,12 @@ object Global {
         Genre(11, "Thriller")
     )
 
-    val users = arrayListOf<User>(
-        User("DavidBryan", "","d"),
-        User("ValentRuslam", "","v"),
-        User("AntoniusYabes", "", "y"),
-        User("12345", "", "12345")
-    )
+//    val users = arrayListOf<User>(
+//        User("DavidBryan", "","d"),
+//        User("ValentRuslam", "","v"),
+//        User("AntoniusYabes", "", "y"),
+//        User("12345", "", "12345")
+//    )
 
     val cerbungs = arrayListOf<Cerbung>(
         Cerbung(
