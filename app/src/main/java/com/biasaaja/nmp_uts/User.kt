@@ -15,7 +15,8 @@ import java.util.Date
 class User(var id:Int,
            var username:String,
            var password:String,
-           var profile_url:String
+           var profile_url:String,
+            var date_joined:String
 ){
     override fun toString(): String {
         return username

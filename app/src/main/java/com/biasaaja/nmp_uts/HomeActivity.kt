@@ -14,26 +14,26 @@ class HomeActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-
-        val sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE)
-
-//        val userId = sharedPreferences.getInt("user_id", 0)
-        val username = sharedPreferences.getString("username", "")
-//        val profile_url = sharedPreferences.getString("profile_url", "")
-
-
-        val lm: LinearLayoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = lm
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.adapter = CerbungAdapter()
-
-        binding.btnCreate.setOnClickListener(){
-            val intent = Intent(this, Create1Activity::class.java)
-            intent.putExtra(KEY_USERNAME, username)
-            startActivity(intent)
-        }
+//        binding = ActivityHomeBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//
+//        val sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE)
+//
+////        val userId = sharedPreferences.getInt("user_id", 0)
+//        val username = sharedPreferences.getString("username", "")
+////        val profile_url = sharedPreferences.getString("profile_url", "")
+//
+//
+//        val lm: LinearLayoutManager = LinearLayoutManager(this)
+//        binding.recyclerView.layoutManager = lm
+//        binding.recyclerView.setHasFixedSize(true)
+//        binding.recyclerView.adapter = CerbungAdapter(cerbungs)
+//
+//        binding.btnCreate.setOnClickListener(){
+//            val intent = Intent(this, Create1Activity::class.java)
+//            intent.putExtra(KEY_USERNAME, username)
+//            startActivity(intent)
+//        }
     }
 }

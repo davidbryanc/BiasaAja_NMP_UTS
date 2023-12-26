@@ -3,6 +3,7 @@ package com.biasaaja.nmp_uts
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
@@ -29,33 +30,40 @@ class LoginActivity : AppCompatActivity() {
             var password = binding.txtPassword.text.toString()
 
             var q = Volley.newRequestQueue(this)
-            val url = "http://ubaya.me/native/160421119/user_login.php"
+            val url = "https://ubaya.me/native/160421119/user_login.php"
 
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,
                 {
+                    Log.d("Volley",it)
                     val obj = JSONObject(it)
+                    val message:String = obj.getString("message")
                     if(obj.getString("result") == "OK") {
-                        val message:String = obj.getString("message")
                         user = User(obj.getJSONObject("data").getInt("id")
                             ,obj.getJSONObject("data").getString("username")
                             ,obj.getJSONObject("data").getString("password")
-                            ,obj.getJSONObject("data").getString("profile_url"))
+                            ,obj.getJSONObject("data").getString("profile_url")
+                            ,obj.getJSONObject("data").getString("date_joined"))
                         Toast.makeText(applicationContext, message ,Toast.LENGTH_SHORT).show()
 
-                        val sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE)
+                        val sharedPreferences = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
 
                         editor.putInt("user_id", user.id)
                         editor.putString("username", user.username)
                         editor.putString("profile_url", user.profile_url)
+                        editor.putString("date_joined",user.date_joined)
+
 
                         editor.apply()
 
-                        val intent = Intent(this, HomeActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra(KEY_USERNAME, user.username)
                         startActivity(intent)
                         this.finish()
+
+                    }else{
+                        Toast.makeText(applicationContext, message.toString() ,Toast.LENGTH_SHORT).show()
                     }
                 },
                 {

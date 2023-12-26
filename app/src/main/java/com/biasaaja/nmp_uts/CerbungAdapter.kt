@@ -3,16 +3,13 @@ package com.biasaaja.nmp_uts
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.biasaaja.nmp_uts.databinding.ActivityReadBinding
 import com.biasaaja.nmp_uts.databinding.CerbungCardBinding
 import com.squareup.picasso.Picasso
 
-class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
-
-    companion object {
-        val ID_CERBUNG = "ID_CERBUNG"
-    }
+class CerbungAdapter(val cerbungs:ArrayList<Cerbung>, val context: FragmentActivity?) : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
 
     class CerbungViewHolder(val binding: CerbungCardBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,29 +20,21 @@ class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>(
     }
 
     override fun onBindViewHolder(holder: CerbungViewHolder, position: Int) {
-        val url = Global.cerbungs[position].url
+        val url = cerbungs[position].url
         with(holder.binding) {
             val builder = Picasso.Builder(holder.itemView.context)
             builder.listener { picasso, uri, exception -> exception.printStackTrace() }
             Picasso.get().load(url).into(imgPoster)
-            txtTitle.text = Global.cerbungs[position].title
+            txtTitle.text = cerbungs[position].title
+            txtAuthor.text = "by " + cerbungs[position].author.toString()
+            txtDescription.text = cerbungs[position].description
 
-            txtAuthor.text = "by " + Global.cerbungs[position].author.toString()
-
-            txtDescription.text = Global.cerbungs[position].description
-
-            var size = 0
-            for (paragraph in Global.paragraphes) {
-                if (paragraph.cerbung == Global.cerbungs[position].id) size++
-            }
-            txtSize.text = size.toString()
-
-            var like = 0 //Nanti akan diganti dengan jumlah like-nya yang sebenarnya
-            txtLike.text = like.toString()
+            txtSize.text = cerbungs[position].parCount.toString()
+            txtLike.text = cerbungs[position].likeCount.toString()
 
             btnRead.setOnClickListener {
                 val intent = Intent(it.context, ReadActivity::class.java)
-                intent.putExtra(ID_CERBUNG, Global.cerbungs[position].id)
+                intent.putExtra(ReadActivity.ID_CERBUNG, cerbungs[position].id)
                 it.context.startActivity(intent)
             }
         }
@@ -53,6 +42,6 @@ class CerbungAdapter() : RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>(
     }
 
     override fun getItemCount(): Int {
-        return Global.cerbungs.size
+        return cerbungs.size
     }
 }
