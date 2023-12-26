@@ -1,5 +1,6 @@
 package com.biasaaja.nmp_uts
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,12 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.biasaaja.nmp_uts.databinding.FragmentHomeBinding
 import com.biasaaja.nmp_uts.databinding.FragmentPrefBinding
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
 
 class HomeFragment : Fragment() {
@@ -39,6 +42,37 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getCerbungs()
 
+        binding.btnAll.setOnClickListener {
+            genre = ""
+            getCerbungs()
+            updateList()
+        }
+        binding.btnThriller.setOnClickListener {
+            genre = "Thriller"
+            getCerbungs()
+            updateList()
+        }
+        binding.btnRomance.setOnClickListener {
+            genre = "Romance"
+            getCerbungs()
+            updateList()
+        }
+        binding.btnDrama.setOnClickListener {
+            genre = "Drama"
+            getCerbungs()
+            updateList()
+        }
+        binding.btnComedy.setOnClickListener {
+            genre = "Comedy"
+            getCerbungs()
+            updateList()
+        }
+        binding.btnAction.setOnClickListener {
+            genre = "Action"
+            getCerbungs()
+            updateList()
+        }
+
 
     }
 
@@ -47,7 +81,8 @@ class HomeFragment : Fragment() {
         val q = Volley.newRequestQueue(activity)
         val url = "https://ubaya.me/native/160421119/cerbung_get.php"
 
-        var stringRequest = object : StringRequest(Method.POST, url, Response.Listener {
+        var stringRequest = @SuppressLint("ShowToast")
+        object : StringRequest(Method.POST, url, Response.Listener {
             val obj = JSONObject(it)
             if(obj.getString("result")=="OK") {
                 val data = obj.getJSONArray("data")
@@ -72,9 +107,12 @@ class HomeFragment : Fragment() {
                     cerbungs.add(cerbung)
                 }
                 updateList()
+            }else if(obj.getString("result")=="EMPTY"){
+                Snackbar.make(binding.root,obj.getString("message"), Snackbar.LENGTH_LONG).show()
             }
         },
             Response.ErrorListener {
+                Snackbar.make(binding.root,it.message.toString(), Snackbar.LENGTH_LONG).show()
             }){
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

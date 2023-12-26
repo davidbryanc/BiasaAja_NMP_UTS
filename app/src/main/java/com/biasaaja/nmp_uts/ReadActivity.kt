@@ -23,6 +23,10 @@ class ReadActivity : AppCompatActivity() {
     private lateinit var cerbung: Cerbung
     var paragraphs: ArrayList<Paragraph> = arrayListOf()
     private lateinit var shared: SharedPreferences
+    private var isFollowed:Boolean = false
+    private var isPermitted:Boolean = false
+    private var username:String = ""
+
 
     companion object {
         val ID_CERBUNG = "ID_CERBUNG"
@@ -35,12 +39,101 @@ class ReadActivity : AppCompatActivity() {
 
         shared = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
 
+        initVolley()
+
+        binding.txtNewParagraph.doOnTextChanged { text, start, before, count ->
+            var charCount = binding.txtNewParagraph.length()
+            binding.txtCharCount.text = "(" + charCount + " of 70 characters)"
+        }
+
+        binding.imgLike.setOnClickListener{
+            if(!cerbung.is_liked!!) {
+                likeHelper("like")
+            }
+            else{
+                likeHelper("dislike")
+            }
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            if(!isPermitted) {
+                submitHelper("request")
+            }
+            else{
+                submitHelper("submit")
+            }
+
+        }
+
+        binding.btnFollow.setOnClickListener {
+            if(!isFollowed) {
+                followHelper("follow")
+            }
+            else{
+                followHelper("unfollow")
+            }
+        }
+    }
+
+    fun updateView(){
+        val builder = Picasso.Builder(binding.root.context)
+        builder.listener { picasso, uri, exception -> exception.printStackTrace() }
+        Picasso.get().load(cerbung.url).into(binding.imgPoster)
+
+        binding.txtTitle.setText(cerbung.title)
+        binding.txtSize.text = cerbung.parCount.toString()
+        binding.txtLike.text = cerbung.likeCount.toString()
+        binding.txtGenre.text = cerbung.genre
+
+        var access = ""
+        if (cerbung.is_private) access = "Restricted" else access = "Public"
+        binding.txtAccess.text = access
+
+        binding.txtAuthor.setText("by "+ cerbung.author)
+        binding.txtDate.setText(cerbung.date)
+        binding.txtCharCount.text = "(0 of 70 characters)"
+
+        if(!cerbung.is_liked!!) {
+            binding.imgLike.setImageResource(R.drawable.baseline_thumb_up_off_alt_24)
+        }
+        else{
+            binding.imgLike.setImageResource(R.drawable.baseline_thumb_up_24)
+        }
+
+        if(!isFollowed) {
+            binding.btnFollow.text = "Follow"
+        }
+        else{
+            binding.btnFollow.text = "Followed"
+        }
+        if(cerbung.is_private){
+            if(!isPermitted) {
+                binding.txtNewParagraph.isVisible = false
+                binding.txtCharCount.isVisible = false
+                binding.btnSubmit.text = "Req to Cont"
+            }
+            else{
+                binding.txtNewParagraph.isVisible = true
+                binding.txtCharCount.isVisible = true
+                binding.btnSubmit.text = "Submit"
+            }
+        }
+
+        if(cerbung.author == username){
+            binding.btnFollow.isVisible = false
+        }
+    }
+
+    private fun initVolley(){
+        paragraphs.clear()
+        binding.txtNewParagraph.setText("")
         val cerbungId = intent.getIntExtra(ID_CERBUNG, 0)
         val userId = shared.getInt("user_id",0)
+        username = shared.getString("username","").toString()
         val q = Volley.newRequestQueue(this)
         val url = "https://ubaya.me/native/160421119/cerbung_details.php"
 
-        var stringRequest = object : StringRequest(
+        val stringRequest = object : StringRequest(
             Method.POST, url, Response.Listener {
                 val obj = JSONObject(it)
                 if (obj.getString("result") == "OK") {
@@ -52,6 +145,12 @@ class ReadActivity : AppCompatActivity() {
                     var isLiked = false
                     if (cerbungObj.getInt("isLiked") == 1) {
                         isLiked = true
+                    }
+                    if (cerbungObj.getInt("isFollowed") == 1) {
+                        isFollowed = true
+                    }
+                    if (cerbungObj.getInt("isPermitted") == 1 || cerbungObj.getString("username").toString() == username){
+                        isPermitted = true
                     }
                     cerbung = Cerbung(
                         cerbungObj.getInt("id"),
@@ -88,6 +187,7 @@ class ReadActivity : AppCompatActivity() {
                 }
             },
             Response.ErrorListener {
+
             }) {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -98,78 +198,56 @@ class ReadActivity : AppCompatActivity() {
         }
         stringRequest.setShouldCache(false)
         q.add(stringRequest)
-
-        binding.txtNewParagraph.doOnTextChanged { text, start, before, count ->
-            var charCount = binding.txtNewParagraph.length()
-            binding.txtCharCount.text = "(" + charCount + " of 70 characters)"
-        }
-
-        binding.imgLike.setOnClickListener{
-            if(!cerbung.is_liked!!) {
-                volleyHelper("like")
-            }
-            else{
-                volleyHelper("dislike")
-            }
-        }
-
-        binding.btnSubmit.setOnClickListener {
-//            TODO: Buat Kalo Submit, Ajukannya ntar aja :D, Cek isAllowed to Edit
-//            加油
-        }
-
-        binding.btnFollow.setOnClickListener {
-//            TODO: Follow :D, cek udh foll/blm
-        }
     }
 
-    fun updateView(){
-        val builder = Picasso.Builder(binding.root.context)
-        builder.listener { picasso, uri, exception -> exception.printStackTrace() }
-        Picasso.get().load(cerbung.url).into(binding.imgPoster)
 
-        binding.txtTitle.setText(cerbung.title)
-        binding.txtSize.text = cerbung.parCount.toString()
-        binding.txtLike.text = cerbung.likeCount.toString()
-        binding.txtGenre.text = cerbung.genre
-
-        var access = ""
-        if (cerbung.is_private) access = "Restricted" else access = "Public"
-        binding.txtAccess.text = access
-
-        binding.txtAuthor.setText(cerbung.author)
-        binding.txtDate.setText(cerbung.date)
-        binding.txtCharCount.text = "(0 of 70 characters)"
-
-        if(!cerbung.is_liked!!) {
-            binding.imgLike.setImageResource(R.drawable.baseline_thumb_up_off_alt_24)
-        }
-        else{
-            binding.imgLike.setImageResource(R.drawable.baseline_thumb_up_24)
-        }
-
-        if(cerbung.is_private!!) {
-            binding.txtNewParagraph.isVisible = false
-            binding.txtCharCount.isVisible = false
-            binding.btnSubmit.text = "Request Access"
-        }
-        else{
-            binding.txtNewParagraph.isVisible = true
-            binding.txtCharCount.isVisible = true
-            binding.btnSubmit.text = "Submit"
-        }
-    }
     fun updateList() {
         val lm: LinearLayoutManager = LinearLayoutManager(this)
-        var recyclerView = binding.recyclerView
+        val recyclerView = binding.recyclerView
         recyclerView.layoutManager = lm
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = ParagraphAdapter(paragraphs, this)
     }
 
-    private fun volleyHelper(action:String){
+    private fun followHelper(action:String){
         val user_id = shared.getInt("user_id",0)
-        var q = Volley.newRequestQueue(this)
+        val q = Volley.newRequestQueue(this)
+        var url = ""
+        if(action == "follow"){
+            url = "https://ubaya.me/native/160421119/cerbung_follow.php"
+        }else{
+            url = "https://ubaya.me/native/160421119/cerbung_unfollow.php"
+        }
+
+        val stringRequest = object : StringRequest(
+            Request.Method.POST, url,
+            {
+                Log.d("Volley",it)
+                val obj = JSONObject(it)
+                if(obj.getString("result") == "OK") {
+                    val message:String = obj.getString("message")
+                    isFollowed = !isFollowed
+                    updateView()
+                    Toast.makeText(this, message , Toast.LENGTH_SHORT).show()
+                }
+            },
+            {
+                Toast.makeText(this, it.message.toString() , Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["user_id"] = user_id.toString()
+                params["cerbung_id"] = cerbung.id.toString()
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
+
+    private fun likeHelper(action:String){
+        val user_id = shared.getInt("user_id",0)
+        val q = Volley.newRequestQueue(this)
         var url = ""
         if(action == "like"){
             url = "https://ubaya.me/native/160421119/cerbung_like.php"
@@ -204,6 +282,44 @@ class ReadActivity : AppCompatActivity() {
                 val params = HashMap<String, String>()
                 params["user_id"] = user_id.toString()
                 params["cerbung_id"] = cerbung.id.toString()
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
+
+    private fun submitHelper(action:String){
+        val user_id = shared.getInt("user_id",0)
+        val q = Volley.newRequestQueue(this)
+        var url = ""
+        if(action == "submit"){
+            url = "https://ubaya.me/native/160421119/paragraph_submit.php"
+        }else if(action == "request"){
+            url = "https://ubaya.me/native/160421119/cerbung_reqacc.php"
+        }
+
+        val stringRequest = object : StringRequest(
+            Request.Method.POST, url,
+            {
+                Log.d("Volley",it)
+                val obj = JSONObject(it)
+                if(obj.getString("result") == "OK") {
+                    val message:String = obj.getString("message")
+                    Toast.makeText(this, message , Toast.LENGTH_SHORT).show()
+                }
+                if(action == "submit"){
+                    initVolley()
+                }
+            },
+            {
+                Toast.makeText(this, it.message.toString() , Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["user_id"] = user_id.toString()
+                params["cerbung_id"] = cerbung.id.toString()
+                params["content"] = binding.txtNewParagraph.text.toString() ?: ""
                 return params
             }
         }
