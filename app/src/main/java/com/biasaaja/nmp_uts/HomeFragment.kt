@@ -101,6 +101,7 @@ class HomeFragment : Fragment() {
                         cerbungObj.getString("genre"),
                         cerbungObj.getInt("likeCount"),
                         cerbungObj.getInt("parCount"),
+                        null,
                         isPrivate,
                         null
                         )

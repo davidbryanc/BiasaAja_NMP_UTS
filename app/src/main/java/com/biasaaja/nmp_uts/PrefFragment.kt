@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat.recreate
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -21,6 +23,7 @@ import org.json.JSONObject
 class PrefFragment : Fragment() {
     private lateinit var binding:FragmentPrefBinding
     private lateinit var shared:SharedPreferences
+    private var isDarkTheme = false
 //    var username = shared.getString(LoginActivity.TOWER.toString(),"").toString()
 
 
@@ -41,14 +44,13 @@ class PrefFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.txtUsernameProf.text = shared.getString("username","").toString()
         var url = shared.getString("profile_url","https://i.stack.imgur.com/l60Hf.png").toString()
-//        val builder = Picasso.Builder(requireActivity())
-//        builder.listener { picasso, uri, exception -> exception.printStackTrace() }
-        Log.d("URLNYa", url)
         Picasso.get().load(url).into(binding.imgPP)
-        binding.switchDark.isChecked = shared.getBoolean("dark",false) == true
+        isDarkTheme = shared.getBoolean("dark",false) == true
+        binding.switchDark.isChecked = isDarkTheme
         binding.switchNotif.isChecked = shared.getBoolean("notif",false) == true
 
         binding.switchDark.setOnClickListener{
+            toggleTheme()
             val editor = shared.edit()
             editor.putBoolean("dark",binding.switchDark.isChecked)
             editor.apply()
@@ -107,8 +109,31 @@ class PrefFragment : Fragment() {
                 it.startActivity(intent)
                 it.finish()
             }
-
-
         }
     }
+
+    private fun toggleTheme() {
+        Log.d("DarkMode", "Before: $isDarkTheme")
+
+        if (isDarkTheme) {
+            //requireActivity().setTheme(R.style.Theme_BiasaAja_NMP_UTS)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            //requireActivity().setTheme(R.style.Theme_BiasaAja_NMP_UTSDark)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
+
+        val intent = Intent(requireContext(), requireActivity().javaClass)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        requireActivity().finish()
+        requireActivity().startActivity(intent)
+
+        isDarkTheme = !isDarkTheme
+        Log.d("DarkMode", "After: $isDarkTheme")
+        val editor = shared.edit()
+        editor.putBoolean("dark", isDarkTheme)
+        editor.apply()
+    }
+
 }

@@ -162,6 +162,7 @@ class ReadActivity : AppCompatActivity() {
                         cerbungObj.getString("genre"),
                         cerbungObj.getInt("likeCount"),
                         cerbungObj.getInt("parCount"),
+                        null,
                         isPrivate,
                         isLiked
                     )

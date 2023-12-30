@@ -2,10 +2,12 @@ package com.biasaaja.nmp_uts
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -16,6 +18,8 @@ import org.json.JSONObject
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user:User
+    private lateinit var sharedPreferences:SharedPreferences
+    private var isDarkTheme:Boolean = false
     companion object{
         val KEY_USERNAME = "USERNAME"
     }
@@ -23,6 +27,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        checkDark()
+
 
         binding.btnLogin.setOnClickListener {
 //            var login = false
@@ -46,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                             ,obj.getJSONObject("data").getString("date_joined"))
                         Toast.makeText(applicationContext, message ,Toast.LENGTH_SHORT).show()
 
-                        val sharedPreferences = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+                        sharedPreferences = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
 
                         editor.putInt("user_id", user.id)
@@ -78,26 +85,21 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             q.add(stringRequest)
-//            for (user in Global.users)
-////            {
-////                if(binding.txtUsername.text.toString().equals(user.username)
-////                    && binding.txtPassword.text.toString().equals(user.password)) {
-////                    login = true
-////                    username = user.username
-////                }
-////            }
-//            if(!login) Toast.makeText(it.context, "Wrong username or password", Toast.LENGTH_SHORT).show()
-//            else {
-//                Toast.makeText(it.context, "Sign in successful", Toast.LENGTH_SHORT).show()
-//                val intent = Intent(this, HomeActivity::class.java)
-//                intent.putExtra(KEY_USERNAME, username)
-//                startActivity(intent)
-//                this.finish()
-//            }
+
         }
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    fun checkDark(){
+        sharedPreferences = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        isDarkTheme = sharedPreferences.getBoolean("dark",false)
+        if(isDarkTheme){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 }
