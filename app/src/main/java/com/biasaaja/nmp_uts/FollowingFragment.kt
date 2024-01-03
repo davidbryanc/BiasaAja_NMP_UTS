@@ -43,6 +43,11 @@ class FollowingFragment : Fragment() {
         getCerbungs()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getCerbungs()
+    }
+
     fun getCerbungs(){
         cerbungs.clear()
         val q = Volley.newRequestQueue(activity)
@@ -92,7 +97,6 @@ class FollowingFragment : Fragment() {
         }
         stringRequest.setShouldCache(false)
         q.add(stringRequest)
-
     }
 
     fun updateList() {

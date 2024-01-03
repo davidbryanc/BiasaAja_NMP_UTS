@@ -63,7 +63,7 @@ class PrefFragment : Fragment() {
         }
 
         binding.btnChange.setOnClickListener {
-            if(binding.editTextNew.text == binding.editTextRetype.text){
+            if(binding.editTextNew.text.toString() == binding.editTextRetype.text.toString()){
                 var username = shared.getString("username","")
                 var old = binding.editTextOld.text.toString()
                 var new = binding.editTextNew.text.toString()
@@ -94,6 +94,8 @@ class PrefFragment : Fragment() {
                     }
                 }
                 q.add(stringRequest)
+            }else{
+                Toast.makeText(this.context, binding.editTextRetype.text.toString() + " " + binding.editTextNew.text.toString() , Toast.LENGTH_SHORT).show()
             }
         }
 

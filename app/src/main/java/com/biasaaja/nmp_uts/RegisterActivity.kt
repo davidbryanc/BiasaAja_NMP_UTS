@@ -29,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
                 var profile_url = binding.txtPicture.text.toString()
 
                 var q = Volley.newRequestQueue(this)
-                val url = "https://ubaya.me/native/160421119/user_login.php"
+                val url = "https://ubaya.me/native/160421119/user_register.php"
 
                 val stringRequest = object : StringRequest(
                     Request.Method.POST, url,
