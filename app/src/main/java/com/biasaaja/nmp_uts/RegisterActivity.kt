@@ -38,6 +38,9 @@ class RegisterActivity : AppCompatActivity() {
                         if(obj.getString("result") == "OK") {
                             val message:String = obj.getString("message")
                             Toast.makeText(applicationContext, message ,Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            this.finish()
                         }
                     },
                     {
@@ -54,8 +57,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 q.add(stringRequest)
 
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
             }else{
                 Toast.makeText(it.context, "Password and password confirmation are different", Toast.LENGTH_SHORT).show()
             }

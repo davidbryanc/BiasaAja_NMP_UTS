@@ -30,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
 
         checkDark()
 
-
         binding.btnLogin.setOnClickListener {
 //            var login = false
             var username = binding.txtUsername.text.toString()
@@ -60,7 +59,6 @@ class LoginActivity : AppCompatActivity() {
                         editor.putString("username", user.username)
                         editor.putString("profile_url", user.profile_url)
                         editor.putString("date_joined",user.date_joined)
-
 
                         editor.apply()
 

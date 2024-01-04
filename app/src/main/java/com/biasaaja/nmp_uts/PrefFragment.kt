@@ -79,10 +79,12 @@ class PrefFragment : Fragment() {
                         if(obj.getString("result") == "OK") {
                             val message:String = obj.getString("message")
                             Toast.makeText(this.context, message , Toast.LENGTH_SHORT).show()
+                            clearText()
                         }
                     },
                     {
                         Toast.makeText(this.context, it.message.toString() , Toast.LENGTH_SHORT).show()
+                        clearText()
                     }
                 ) {
                     override fun getParams(): Map<String, String> {
@@ -136,6 +138,12 @@ class PrefFragment : Fragment() {
         val editor = shared.edit()
         editor.putBoolean("dark", isDarkTheme)
         editor.apply()
+    }
+
+    private fun clearText(){
+        binding.editTextNew.setText("")
+        binding.editTextRetype.setText("")
+        binding.editTextOld.setText("")
     }
 
 }

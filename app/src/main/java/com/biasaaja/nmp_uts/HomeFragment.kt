@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shared = requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
-
     }
 
     override fun onCreateView(

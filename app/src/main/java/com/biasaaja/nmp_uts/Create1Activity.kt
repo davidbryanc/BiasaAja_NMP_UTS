@@ -40,6 +40,12 @@ class Create1Activity : AppCompatActivity() {
             intent.putExtra(Create3Activity.KEY_ACC, access)
             startActivity(intent)
         }
+
+        binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
     }
 
     private fun getIndex(s:String):Int{
