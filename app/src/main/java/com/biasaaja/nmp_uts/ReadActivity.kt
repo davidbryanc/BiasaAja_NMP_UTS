@@ -26,6 +26,7 @@ class ReadActivity : AppCompatActivity() {
     private var isFollowed:Boolean = false
     private var isPermitted:Boolean = false
     private var username:String = ""
+    private var usernameLast:String = ""
 
 
     companion object {
@@ -56,8 +57,13 @@ class ReadActivity : AppCompatActivity() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if(!isPermitted) {
-                submitHelper("request")
+
+            if(cerbung.is_private != false){
+                if(!isPermitted) {
+                    submitHelper("request")
+                }else{
+                    submitHelper("submit")
+                }
             }
             else{
                 submitHelper("submit")
