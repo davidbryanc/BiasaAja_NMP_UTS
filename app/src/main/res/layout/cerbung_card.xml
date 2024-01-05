@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -22,8 +21,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imgPoster"
@@ -43,7 +41,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="[title]"
-                android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgPoster" />
@@ -55,7 +52,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="by [author]"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
@@ -66,7 +62,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="56dp"
                 android:text="[description]"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtAuthor" />
 
@@ -99,7 +94,6 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:text="[size]"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/imgSize"
                 app:layout_constraintTop_toTopOf="@+id/imgSize" />
 
@@ -110,7 +104,6 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:text="[like]"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/imgLike"
                 app:layout_constraintTop_toTopOf="@+id/imgLike" />
 
